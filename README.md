@@ -1,4 +1,4 @@
-# flutterDoodoo
+# Doodoo
 
 Todo List App - Mobile app Flutter
 
@@ -10,3 +10,6 @@ Todo List App - Mobile app Flutter
 - [ ] Tasks Detail
   - [ ] Detail information; Description, deadline, priority
   - [ ] Sub tasks
+
+## Reference
+- [https://github.com/lohanidamodar/flutter_ui_challenges](https://github.com/lohanidamodar/flutter_ui_challenges)
