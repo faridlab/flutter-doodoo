@@ -4,6 +4,10 @@ Todo List App - Mobile app Flutter
 
 ## Milestone
 
+- [ ] Router
+  - [X] Basic routes
+  - [ ] Dynamic routes
+  - [ ] Middleware
 - [ ] Homepage
   - [ ] Filter by day or datetime
   - [ ] Task level based on Urgent and Priority
