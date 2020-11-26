@@ -1,14 +1,8 @@
-import 'package:flutter/material.dart';
-import '../screens/pages/home/home.dart';
+// import 'package:flutter/material.dart';
+import '../screens/screens.dart';
 
-// FIXME: make this router more clear
-class RouterApp {
-  BuildContext context;
-
-  RouterApp({this.context});
-
-  final routes = {
-    '/': (BuildContext context) => HomeTodoApp(),
-    // '/task': () => {},
-  };
-}
+List routes = [
+  {'path': '/', 'screen': () => HomeScreen()},
+  {'path': '/login', 'screen': () => LoginScreen()},
+  {'path': '*', 'screen': () => NotfoundScreen()}
+];
