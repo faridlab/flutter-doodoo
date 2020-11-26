@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'router/routes.dart';
+import 'router/router.dart' as router;
 
 void main() {
   runApp(DoodooApp());
@@ -11,8 +11,10 @@ class DoodooApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: appTitle,
-        initialRoute: '/',
-        routes: RouterApp(context: context).routes);
+      title: appTitle,
+      initialRoute: '/',
+      onGenerateRoute: router.generateRoute,
+      // routes: RouterApp(context: context).routes
+    );
   }
 }
