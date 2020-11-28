@@ -72,38 +72,32 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
         child: Container(
-          height: 50,
-          child: Row(
-            children: <Widget>[
-              SizedBox(width: 20.0),
-              IconButton(
-                color: Colors.grey.shade700,
-                icon: Icon(
-                  Icons.menu,
-                  size: 30,
-                ),
-                onPressed: () {},
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+          child: TextFormField(
+            cursorColor: Theme.of(context).cursorColor,
+            decoration: InputDecoration(
+              hintText: 'Add task...',
+              labelStyle: TextStyle(
+                color: Color(0xFF6200EE),
               ),
-              Spacer(),
-              IconButton(
-                color: Colors.grey.shade700,
-                icon: Icon(
-                  FontAwesomeIcons.calendarAlt,
-                  size: 30,
-                ),
-                onPressed: () {},
+              suffixIcon: Icon(
+                Icons.add,
               ),
-              SizedBox(width: 20.0),
-            ],
+              // enabledBorder: UnderlineInputBorder(
+              //   borderSide: BorderSide(color: Color(0xFF6200EE)),
+              // ),
+            ),
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: color2,
-        child: Icon(Icons.add),
-        onPressed: () {},
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: color2,
+      //   child: Icon(Icons.add),
+      //   onPressed: () {},
+      // ),
     );
   }
 
