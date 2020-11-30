@@ -69,32 +69,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        child: Container(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom),
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          child: TextFormField(
-            onFieldSubmitted: (field) => {
-              print(field);
-            },
-            cursorColor: Theme.of(context).cursorColor,
-            decoration: InputDecoration(
-              hintText: 'Add task...',
-              labelStyle: TextStyle(
-                color: Color(0xFF6200EE),
-              ),
-              suffixIcon: Icon(
-                Icons.add,
-              ),
-              // enabledBorder: UnderlineInputBorder(
-              //   borderSide: BorderSide(color: Color(0xFF6200EE)),
-              // ),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: InputTaskText(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // floatingActionButton: FloatingActionButton(
       //   backgroundColor: color2,
@@ -179,4 +154,50 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class InputTaskText extends StatefulWidget {
+
+  String task;
+  InputTaskText({Key key, this.task}) : super(key: key);
+
+  @override
+  InputTaskState createState() => new InputTaskState();
+}
+
+class InputTaskState extends State<InputTaskText> {
+  final TextEditingController textController = new TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    textController.text = '';
+    return BottomAppBar(
+      elevation: 0,
+      child: Container(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+        child: TextFormField(
+          controller: textController,
+          onFieldSubmitted: (field) {
+            print(field);
+            textController.clear();
+          },
+          cursorColor: Theme.of(context).cursorColor,
+          decoration: InputDecoration(
+            hintText: 'Add task...',
+            labelStyle: TextStyle(
+              color: Color(0xFF6200EE),
+            ),
+            suffixIcon: Icon(
+              Icons.add,
+            ),
+            // enabledBorder: UnderlineInputBorder(
+            //   borderSide: BorderSide(color: Color(0xFF6200EE)),
+            // ),
+          ),
+        ),
+      ),
+    );
+  }
+  
 }
