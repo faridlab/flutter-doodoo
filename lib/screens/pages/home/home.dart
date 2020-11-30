@@ -76,6 +76,9 @@ class HomeScreen extends StatelessWidget {
               bottom: MediaQuery.of(context).viewInsets.bottom),
           margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
           child: TextFormField(
+            onFieldSubmitted: (field) => {
+              print(field);
+            },
             cursorColor: Theme.of(context).cursorColor,
             decoration: InputDecoration(
               hintText: 'Add task...',
