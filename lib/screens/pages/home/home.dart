@@ -158,8 +158,7 @@ class HomeScreen extends StatelessWidget {
 
 class InputTaskText extends StatefulWidget {
 
-  String task;
-  InputTaskText({Key key, this.task}) : super(key: key);
+  InputTaskText({Key key}) : super(key: key);
 
   @override
   InputTaskState createState() => new InputTaskState();
