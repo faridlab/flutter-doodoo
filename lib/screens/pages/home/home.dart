@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/store/tasks/tasks.dart';
 
 class HomeScreen extends StatelessWidget {
-  final Color color1 = Color(0xffFA696C);
-  final Color color2 = Color(0xffFA8165);
-  final Color color3 = Color(0xffFB8964);
   final List tasks = [
     {"title": "Learn Flutter", "completed": true},
     {"title": "Detail task page", "completed": false},
@@ -22,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _buildHeader(),
+              Header(),
               SizedBox(height: 40.0),
               Container(
                 height: 50,
@@ -79,8 +77,17 @@ class HomeScreen extends StatelessWidget {
         //   onPressed: () {},
         // ),
       ));
+}
 
-  Container _buildHeader() {
+class Header extends StatelessWidget {
+  final Color color1 = Color(0xffFA696C);
+  final Color color2 = Color(0xffFA8165);
+  final Color color3 = Color(0xffFB8964);
+
+  final TextEditingController textController = new TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final tasks = Provider.of<Tasks>(context);
     return Container(
       height: 250,
       width: double.infinity,
@@ -145,6 +152,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10.0),
                 Text(
+                  // tasks.itemsDescription,
                   "You have 4 remaining\ntasks for today!",
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 )
@@ -162,6 +170,7 @@ class InputTaskText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasks = Provider.of<Tasks>(context);
+    // print(tasks.itemsDescription);
     textController.text = '';
     return BottomAppBar(
       elevation: 0,
