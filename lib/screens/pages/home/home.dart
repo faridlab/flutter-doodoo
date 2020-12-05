@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_app/store/tasks/tasks.dart';
 
 class HomeScreen extends StatelessWidget {
   final Color color1 = Color(0xffFA696C);
@@ -14,70 +15,70 @@ class HomeScreen extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildHeader(),
-            SizedBox(height: 40.0),
-            Container(
-              height: 50,
-              padding: const EdgeInsets.only(left: 20.0),
-              child: OverflowBox(
-                maxWidth: 500,
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "Today",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 42.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(width: 100),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Tomorrow",
+  Widget build(BuildContext context) => Provider<Tasks>(
+      create: (_) => Tasks(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildHeader(),
+              SizedBox(height: 40.0),
+              Container(
+                height: 50,
+                padding: const EdgeInsets.only(left: 20.0),
+                child: OverflowBox(
+                  maxWidth: 500,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Today",
                         style: TextStyle(
-                            color: Colors.grey.shade400,
-                            fontSize: 30.0,
+                            color: Colors.black,
+                            fontSize: 42.0,
                             fontWeight: FontWeight.bold),
                       ),
-                    )
-                  ],
+                      SizedBox(width: 100),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Tomorrow",
+                          style: TextStyle(
+                              color: Colors.grey.shade400,
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30.0),
-            ...tasks.map((task) => Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: ListTile(
-                    title: Text(
-                  task["title"],
-                  style: TextStyle(
-                      decoration: task["completed"]
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                      decorationColor: Colors.red,
-                      fontSize: 22.0,
-                      color: Colors.black),
-                )))),
-          ],
+              SizedBox(height: 30.0),
+              ...tasks.map((task) => Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: ListTile(
+                      title: Text(
+                    task["title"],
+                    style: TextStyle(
+                        decoration: task["completed"]
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        decorationColor: Colors.red,
+                        fontSize: 22.0,
+                        color: Colors.black),
+                  )))),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: InputTaskText(),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: color2,
-      //   child: Icon(Icons.add),
-      //   onPressed: () {},
-      // ),
-    );
-  }
+        bottomNavigationBar: InputTaskText(),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: color2,
+        //   child: Icon(Icons.add),
+        //   onPressed: () {},
+        // ),
+      ));
 
   Container _buildHeader() {
     return Container(
@@ -156,30 +157,25 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class InputTaskText extends StatefulWidget {
-
-  InputTaskText({Key key}) : super(key: key);
-
-  @override
-  InputTaskState createState() => new InputTaskState();
-}
-
-class InputTaskState extends State<InputTaskText> {
+class InputTaskText extends StatelessWidget {
   final TextEditingController textController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final list = Provider.of<Tasks>(context);
     textController.text = '';
     return BottomAppBar(
       elevation: 0,
       child: Container(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
         child: TextFormField(
           controller: textController,
-          onFieldSubmitted: (field) {
-            print(field);
-            textController.clear();
+          onFieldSubmitted: (title) {
+            list.addTodo(title);
+            print(title);
+            // print(list.tasks);
+            // textController.clear();
           },
           cursorColor: Theme.of(context).cursorColor,
           decoration: InputDecoration(
@@ -198,5 +194,4 @@ class InputTaskState extends State<InputTaskText> {
       ),
     );
   }
-  
 }

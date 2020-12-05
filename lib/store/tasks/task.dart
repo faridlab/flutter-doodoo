@@ -1,9 +1,15 @@
+import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:mobx/mobx.dart';
 import 'package:meta/meta.dart';
 import 'dart:math';
 part 'task.g.dart';
 
-class Task = _Task with _$Task;
+@jsonSerializable
+@Json(allowCircularReferences: 1)
+class Task extends _Task with _$Task {
+  String title;
+  Task({@required this.title});
+}
 
 abstract class _Task with Store {
   @observable
@@ -21,12 +27,7 @@ abstract class _Task with Store {
   @observable
   bool done = false;
 
-  _Task(
-      {@required this.title,
-      this.description,
-      this.urgent,
-      this.important,
-      this.dueDate}) {
+  _Task({@required this.title}) {
     var rng = new Random();
     this.id = rng.nextInt(100000);
   }

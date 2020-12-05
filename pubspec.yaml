@@ -27,6 +27,7 @@ dependencies:
   provider: ^3.0.0
   mobx: ^1.2.1+4
   flutter_mobx: ^1.1.0+2
+  dart_json_mapper: ^1.7.3
 
 
   # The following adds the Cupertino Icons font to your application.
