@@ -161,7 +161,7 @@ class InputTaskText extends StatelessWidget {
   final TextEditingController textController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final list = Provider.of<Tasks>(context);
+    final tasks = Provider.of<Tasks>(context);
     textController.text = '';
     return BottomAppBar(
       elevation: 0,
@@ -169,13 +169,12 @@ class InputTaskText extends StatelessWidget {
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-        child: TextFormField(
+        child: TextField(
           controller: textController,
-          onFieldSubmitted: (title) {
-            list.addTodo(title);
-            print(title);
-            // print(list.tasks);
-            // textController.clear();
+          textInputAction: TextInputAction.done,
+          onSubmitted: (value) {
+            tasks.addTask(value);
+            textController.clear();
           },
           cursorColor: Theme.of(context).cursorColor,
           decoration: InputDecoration(

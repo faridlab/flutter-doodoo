@@ -16,11 +16,6 @@ abstract class _Tasks with Store {
 
   _Tasks({this.tasks});
 
-  @action
-  void addTask(Task task) {
-    tasks.add(task);
-  }
-
   @computed
   int get countTasks => tasks.length;
 
@@ -79,7 +74,7 @@ abstract class _Tasks with Store {
       hasPendingTodos && filter != VisibilityFilter.completed;
 
   @action
-  void addTodo(String title) {
+  void addTask(String title) {
     final todo = Task(title: title);
     tasks.add(todo);
   }

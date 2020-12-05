@@ -105,17 +105,6 @@ mixin _$Tasks on _Tasks, Store {
   final _$_TasksActionController = ActionController(name: '_Tasks');
 
   @override
-  void addTask(Task task) {
-    final _$actionInfo =
-        _$_TasksActionController.startAction(name: '_Tasks.addTask');
-    try {
-      return super.addTask(task);
-    } finally {
-      _$_TasksActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   Task getTaskByID(int id) {
     final _$actionInfo =
         _$_TasksActionController.startAction(name: '_Tasks.getTaskByID');
@@ -127,11 +116,11 @@ mixin _$Tasks on _Tasks, Store {
   }
 
   @override
-  void addTodo(String title) {
+  void addTask(String title) {
     final _$actionInfo =
-        _$_TasksActionController.startAction(name: '_Tasks.addTodo');
+        _$_TasksActionController.startAction(name: '_Tasks.addTask');
     try {
-      return super.addTodo(title);
+      return super.addTask(title);
     } finally {
       _$_TasksActionController.endAction(_$actionInfo);
     }
