@@ -44,8 +44,8 @@ abstract class _Tasks with Store {
 
   @computed
   String get itemsDescription {
-    if (tasks.isEmpty) {
-      return "There are no Todos here. Why don't you add one?.";
+    if (tasks == null || tasks.isEmpty) {
+      return "You have no remaining\ntasks for today!";
     }
 
     final suffix = pendingTodos.length == 1 ? 'todo' : 'todos';
