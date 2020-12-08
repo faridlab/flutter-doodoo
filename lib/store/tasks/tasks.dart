@@ -17,7 +17,7 @@ abstract class _Tasks with Store {
   _Tasks({this.tasks});
 
   @computed
-  int get countTasks => tasks.length;
+  int get countTasks => tasks == null ? 0 : tasks.length;
 
   @action
   Task getTaskByID(int id) {

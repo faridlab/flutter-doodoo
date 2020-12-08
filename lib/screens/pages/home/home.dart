@@ -10,14 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  final List tasks = [
-    {"title": "Learn Flutter", "completed": true},
-    {"title": "Detail task page", "completed": false},
-    {"title": "Routes Navigation", "completed": false},
-    {"title": "Store management", "completed": false},
-    {"title": "Localstorage ex: SQLite, memory, etc", "completed": false},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -60,19 +52,20 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 30.0),
-                ...tasks.map((task) => Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: ListTile(
-                        title: Text(
-                      task["title"],
-                      style: TextStyle(
-                          decoration: task["completed"]
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                          decorationColor: Colors.red,
-                          fontSize: 22.0,
-                          color: Colors.black),
-                    )))),
+                TodoListView(),
+                // ...tasks.map((task) => Padding(
+                //     padding: const EdgeInsets.only(left: 10.0),
+                //     child: ListTile(
+                //         title: Text(
+                //       task["title"],
+                //       style: TextStyle(
+                //           decoration: task["completed"]
+                //               ? TextDecoration.lineThrough
+                //               : TextDecoration.none,
+                //           decorationColor: Colors.red,
+                //           fontSize: 22.0,
+                //           color: Colors.black),
+                //     )))),
               ],
             ),
           ),
@@ -174,6 +167,49 @@ class Header extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class TodoListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final list = context.watch<Tasks>();
+    if (list.countTasks == 0) {
+      return Row(children: [
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Text('You have no task', style: TextStyle(fontSize: 18.0)),
+        )
+      ]);
+    }
+
+    return Observer(
+        builder: (_) => Flexible(
+              child: ListView.builder(
+                  itemCount: list.visibleTodos.length,
+                  itemBuilder: (_, index) {
+                    final todo = list.visibleTodos[index];
+                    return Observer(
+                        builder: (_) => CheckboxListTile(
+                              controlAffinity: ListTileControlAffinity.leading,
+                              value: todo.done,
+                              onChanged: (flag) => todo.done = flag,
+                              title: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      child: Text(
+                                    todo.description,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () => list.removeTodo(todo),
+                                  )
+                                ],
+                              ),
+                            ));
+                  }),
+            ));
   }
 }
 
