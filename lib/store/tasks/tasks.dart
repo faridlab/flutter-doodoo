@@ -14,7 +14,7 @@ abstract class _Tasks with Store {
   @observable
   ObservableList<Task> tasks = ObservableList<Task>();
 
-  _Tasks({this.tasks});
+  // _Tasks({this.tasks});
 
   @computed
   int get countTasks => tasks == null ? 0 : tasks.length;
@@ -75,7 +75,7 @@ abstract class _Tasks with Store {
 
   @action
   void addTask(String title) {
-    final todo = Task(title: title);
+    final todo = new Task(title: title);
     tasks.add(todo);
   }
 

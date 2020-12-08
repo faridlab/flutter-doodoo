@@ -11,73 +11,52 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [Provider<Tasks>(create: (_) => Tasks())],
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Header(),
-                SizedBox(height: 40.0),
-                Container(
-                  height: 50,
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: OverflowBox(
-                    maxWidth: 500,
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "Today",
+  Widget build(BuildContext context) => MultiProvider(
+      providers: [Provider<Tasks>(create: (_) => Tasks())],
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Header(),
+              SizedBox(height: 40.0),
+              Container(
+                height: 50,
+                padding: const EdgeInsets.only(left: 20.0),
+                child: OverflowBox(
+                  maxWidth: 500,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Today",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 42.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 100),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Tomorrow",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 42.0,
+                              color: Colors.grey.shade400,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 100),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Tomorrow",
-                            style: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(height: 30.0),
-                TodoListView(),
-                // ...tasks.map((task) => Padding(
-                //     padding: const EdgeInsets.only(left: 10.0),
-                //     child: ListTile(
-                //         title: Text(
-                //       task["title"],
-                //       style: TextStyle(
-                //           decoration: task["completed"]
-                //               ? TextDecoration.lineThrough
-                //               : TextDecoration.none,
-                //           decorationColor: Colors.red,
-                //           fontSize: 22.0,
-                //           color: Colors.black),
-                //     )))),
-              ],
-            ),
+              ),
+              SizedBox(height: 30.0),
+              TodoListView(),
+            ],
           ),
-          bottomNavigationBar: InputTaskText(),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          // floatingActionButton: FloatingActionButton(
-          //   backgroundColor: color2,
-          //   child: Icon(Icons.add),
-          //   onPressed: () {},
-          // ),
-        ));
-  }
+        ),
+        bottomNavigationBar: InputTaskText(),
+      ));
 }
 
 class Header extends StatelessWidget {
@@ -183,33 +162,32 @@ class TodoListView extends StatelessWidget {
       ]);
     }
 
-    return Observer(
-        builder: (_) => Flexible(
-              child: ListView.builder(
-                  itemCount: list.visibleTodos.length,
-                  itemBuilder: (_, index) {
-                    final todo = list.visibleTodos[index];
-                    return Observer(
-                        builder: (_) => CheckboxListTile(
-                              controlAffinity: ListTileControlAffinity.leading,
-                              value: todo.done,
-                              onChanged: (flag) => todo.done = flag,
-                              title: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                      child: Text(
-                                    todo.description,
-                                    overflow: TextOverflow.ellipsis,
-                                  )),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () => list.removeTodo(todo),
-                                  )
-                                ],
-                              ),
-                            ));
-                  }),
-            ));
+    return Flexible(
+      child: ListView.builder(
+          itemCount: list.visibleTodos.length,
+          itemBuilder: (_, index) {
+            final todo = list.visibleTodos[index];
+            return Observer(
+                builder: (_) => CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: todo.done,
+                      onChanged: (flag) => todo.done = flag,
+                      title: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Text(
+                            todo.description,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => list.removeTodo(todo),
+                          )
+                        ],
+                      ),
+                    ));
+          }),
+    );
   }
 }
 
@@ -218,8 +196,8 @@ class InputTaskText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasks = Provider.of<Tasks>(context);
-    // print(tasks.itemsDescription);
     textController.text = '';
+    // return Observer(builder: (context) {
     return BottomAppBar(
       elevation: 0,
       child: Container(
@@ -249,5 +227,6 @@ class InputTaskText extends StatelessWidget {
         ),
       ),
     );
+    // });
   }
 }
