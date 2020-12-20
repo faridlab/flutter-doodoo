@@ -147,7 +147,6 @@ class TodoListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       final tasks = Provider.of<Tasks>(context);
-      print(tasks.countTasks);
       if (tasks.countTasks == 0) {
         return Row(children: [
           Padding(
@@ -164,27 +163,26 @@ class TodoListView extends StatelessWidget {
             itemCount: tasks.visibleTodos.length,
             itemBuilder: (_, index) {
               final todo = tasks.visibleTodos[index];
-              print(todo);
-              print('======');
-
-              return CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                value: todo.done,
-                onChanged: (flag) => todo.done = flag,
-                title: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Text(
-                      todo.title,
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () => tasks.removeTodo(todo),
-                    )
-                  ],
-                ),
-              );
+              return Observer(builder: (context) {
+                return CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: todo.done,
+                  onChanged: (flag) => todo.done = flag,
+                  title: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Text(
+                        todo.title,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => tasks.removeTodo(todo),
+                      )
+                    ],
+                  ),
+                );
+              });
             }),
       );
     });
