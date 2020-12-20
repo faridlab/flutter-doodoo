@@ -49,7 +49,7 @@ abstract class _Tasks with Store {
     }
 
     final suffix = pendingTodos.length == 1 ? 'todo' : 'todos';
-    return '${pendingTodos.length} pending $suffix, ${completedTodos.length} completed';
+    return '${pendingTodos.length} pending $suffix\n${completedTodos.length} completed';
   }
 
   @computed

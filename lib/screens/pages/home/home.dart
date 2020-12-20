@@ -8,46 +8,45 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
       providers: [Provider<Tasks>(create: (_) => Tasks())],
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Header(),
-              SizedBox(height: 40.0),
-              Container(
-                height: 50,
-                padding: const EdgeInsets.only(left: 20.0),
-                child: OverflowBox(
-                  maxWidth: 500,
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "Today",
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Header(),
+            SizedBox(height: 40.0),
+            Container(
+              height: 50,
+              padding: const EdgeInsets.only(left: 20.0),
+              child: OverflowBox(
+                maxWidth: 500,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Today",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 42.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 100),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Tomorrow",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 42.0,
+                            color: Colors.grey.shade400,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 100),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Tomorrow",
-                          style: TextStyle(
-                              color: Colors.grey.shade400,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
-              SizedBox(height: 30.0),
-              TodoListView(),
-            ],
-          ),
+            ),
+            SizedBox(height: 30.0),
+            TodoListView(),
+          ],
         ),
         bottomNavigationBar: InputTaskText(),
       ));
@@ -146,42 +145,49 @@ class Header extends StatelessWidget {
 class TodoListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final tasks = Provider.of<Tasks>(context);
-    if (tasks.countTasks == 0) {
-      return Row(children: [
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Text('You have no task', style: TextStyle(fontSize: 18.0)),
-        )
-      ]);
-    }
+    return Observer(builder: (context) {
+      final tasks = Provider.of<Tasks>(context);
+      print(tasks.countTasks);
+      if (tasks.countTasks == 0) {
+        return Row(children: [
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Text('You have no task', style: TextStyle(fontSize: 18.0)),
+          )
+        ]);
+      }
 
-    return Flexible(
-      child: ListView.builder(
-          itemCount: tasks.visibleTodos.length,
-          itemBuilder: (_, index) {
-            final todo = tasks.visibleTodos[index];
-            return Observer(
-                builder: (_) => CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: todo.done,
-                      onChanged: (flag) => todo.done = flag,
-                      title: Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: Text(
-                            todo.description,
-                            overflow: TextOverflow.ellipsis,
-                          )),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () => tasks.removeTodo(todo),
-                          )
-                        ],
-                      ),
-                    ));
-          }),
-    );
+      return Flexible(
+        fit: FlexFit.loose,
+        flex: 1,
+        child: ListView.builder(
+            itemCount: tasks.visibleTodos.length,
+            itemBuilder: (_, index) {
+              final todo = tasks.visibleTodos[index];
+              print(todo);
+              print('======');
+
+              return CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                value: todo.done,
+                onChanged: (flag) => todo.done = flag,
+                title: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Text(
+                      todo.title,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => tasks.removeTodo(todo),
+                    )
+                  ],
+                ),
+              );
+            }),
+      );
+    });
   }
 }
 
