@@ -3,13 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/store/tasks/tasks.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
-  @override
-  HomeScreenState createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiProvider(
       providers: [Provider<Tasks>(create: (_) => Tasks())],
@@ -68,7 +62,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      final tasks = context.watch<Tasks>();
+      final tasks = Provider.of<Tasks>(context);
       return Container(
         height: 250,
         width: double.infinity,
@@ -152,8 +146,8 @@ class Header extends StatelessWidget {
 class TodoListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final list = context.watch<Tasks>();
-    if (list.countTasks == 0) {
+    final tasks = Provider.of<Tasks>(context);
+    if (tasks.countTasks == 0) {
       return Row(children: [
         Padding(
           padding: EdgeInsets.all(20),
@@ -164,9 +158,9 @@ class TodoListView extends StatelessWidget {
 
     return Flexible(
       child: ListView.builder(
-          itemCount: list.visibleTodos.length,
+          itemCount: tasks.visibleTodos.length,
           itemBuilder: (_, index) {
-            final todo = list.visibleTodos[index];
+            final todo = tasks.visibleTodos[index];
             return Observer(
                 builder: (_) => CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
@@ -181,7 +175,7 @@ class TodoListView extends StatelessWidget {
                           )),
                           IconButton(
                             icon: const Icon(Icons.delete),
-                            onPressed: () => list.removeTodo(todo),
+                            onPressed: () => tasks.removeTodo(todo),
                           )
                         ],
                       ),
