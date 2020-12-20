@@ -164,12 +164,15 @@ class TodoListView extends StatelessWidget {
             itemBuilder: (_, index) {
               final todo = tasks.visibleTodos[index];
               return Observer(builder: (context) {
-                return CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  value: todo.done,
-                  onChanged: (flag) => todo.done = flag,
+                return ListTile(
+                  // controlAffinity: ListTileControlAffinity.leading,
+                  // value: todo.done,
+                  // onChanged: (flag) => todo.done = flag,
                   title: Row(
                     children: <Widget>[
+                      Checkbox(
+                          value: todo.done,
+                          onChanged: (flag) => todo.done = flag),
                       Expanded(
                           child: Text(
                         todo.title,
