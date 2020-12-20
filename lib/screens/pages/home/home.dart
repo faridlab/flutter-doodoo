@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/store/tasks/tasks.dart';
+import 'package:flutter_app/utils/ScreenArguments.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -165,18 +166,24 @@ class TodoListView extends StatelessWidget {
               final todo = tasks.visibleTodos[index];
               return Observer(builder: (context) {
                 return ListTile(
-                  // controlAffinity: ListTileControlAffinity.leading,
-                  // value: todo.done,
-                  // onChanged: (flag) => todo.done = flag,
                   title: Row(
                     children: <Widget>[
                       Checkbox(
                           value: todo.done,
                           onChanged: (flag) => todo.done = flag),
                       Expanded(
-                          child: Text(
-                        todo.title,
-                        overflow: TextOverflow.ellipsis,
+                          child: InkWell(
+                        child: Text(
+                          todo.title,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/task/detail',
+                            arguments: ScreenArguments(id: todo.id),
+                          );
+                        },
                       )),
                       IconButton(
                         icon: const Icon(Icons.delete),

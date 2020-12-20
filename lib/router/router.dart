@@ -8,14 +8,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       // FIXME: find path by pattern
       return item['path'] == settings.name;
     });
-
     return MaterialPageRoute(
-        builder: (BuildContext context) => route['screen']());
+        builder: (BuildContext context) => route['screen'](),
+        settings: settings);
   } catch (e) {
     route = routes.firstWhere((item) {
       return item['path'] == '*';
     });
-
     return MaterialPageRoute(
         builder: (BuildContext context) => route['screen']());
   }
