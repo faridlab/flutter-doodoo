@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/utils/ScreenArguments.dart';
+import 'package:doodoo/utils/ScreenArguments.dart';
 
 class TaskShow extends StatelessWidget {
   @override

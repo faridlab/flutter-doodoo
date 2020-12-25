@@ -3,8 +3,8 @@
 
 import 'dart:core';
 import 'package:dart_json_mapper/src/model/annotations.dart' as prefix0;
-import 'package:flutter_app/store/tasks/task.dart' as prefix2;
-import 'package:flutter_app/store/tasks/tasks.dart' as prefix1;
+import 'package:doodoo/store/tasks/task.dart' as prefix2;
+import 'package:doodoo/store/tasks/tasks.dart' as prefix1;
 import 'package:meta/meta.dart' as prefix4;
 import 'package:mobx/src/api/annotations.dart' as prefix3;
 import 'package:mobx/src/api/observable_collections.dart' as prefix5;

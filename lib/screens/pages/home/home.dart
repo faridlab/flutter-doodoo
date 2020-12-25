@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_app/store/tasks/tasks.dart';
-import 'package:flutter_app/utils/ScreenArguments.dart';
+import 'package:doodoo/store/tasks/tasks.dart';
+import 'package:doodoo/utils/ScreenArguments.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
